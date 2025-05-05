@@ -41,6 +41,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/liberado/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/acceso/registro").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/acceso/login").permitAll()
                         //Liberacion de archivos estaticos
                         .requestMatchers("/css/**", "/js/**", "/imgs/**", "/static/**").permitAll()
 
@@ -49,7 +50,15 @@ public class SpringSecurityConfig {
 
                         //Configuraciones Generales
                         .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
+//                .formLogin(Customizer.withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/acceso/login") //Ruta de formulario de login
+                        .usernameParameter("email") //Input de email
+                        .passwordParameter("password") //Input de password
+                        .defaultSuccessUrl("/") //Ruta de redireccion si el login es exitoso
+//                        .failureUrl("/acceso/login/error") //Ruta de redireccion el el login es erroneo
+                        .permitAll()
+                )
                 .logout(Customizer.withDefaults());
         return http.build();
     }
