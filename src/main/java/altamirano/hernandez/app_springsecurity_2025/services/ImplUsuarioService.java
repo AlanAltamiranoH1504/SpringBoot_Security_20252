@@ -30,6 +30,16 @@ public class ImplUsuarioService implements IUsuarioService {
     }
 
     @Override
+    public Usuario findByEmail(String email) {
+        try {
+            Usuario foundedUsuario = iUsuarioRepository.findByEmail(email);
+            return foundedUsuario;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void save(Usuario usuario) {
         iUsuarioRepository.save(usuario);
     }

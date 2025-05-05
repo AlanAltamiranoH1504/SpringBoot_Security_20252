@@ -45,7 +45,7 @@ public class SpringSecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/imgs/**", "/static/**").permitAll()
 
                         //Rutas que requieren proteccion (autenticacion o por roles)
-                        .requestMatchers(HttpMethod.GET, "/protegido/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/protegido/**").hasAuthority("ADMIN")
 
                         //Configuraciones Generales
                         .anyRequest().authenticated())
