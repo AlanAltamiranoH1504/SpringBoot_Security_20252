@@ -22,15 +22,17 @@
         <!--Token csrf-->
         <input type="hidden" name="_csrf" id="_csrf" th:value="${_csrf.token}">
 
-        <div id="errores" class="fw-semibold text-center text-uppercase px-3 py-2 d-none bg-danger rounded text-white mb-3"></div>
-
+        <div id="errores"></div>
+        <div id="exito" class="fw-semibold text-center text-uppercase px-3 py-2 d-none bg-success rounded text-white mb-3">
+            Usuario Registrado
+        </div>
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <div class="input-group">
                 <span class="input-group-text">
                     <i class="bi bi-person-fill"></i>
                 </span>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de usuario" required>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de usuario" >
             </div>
         </div>
 
@@ -40,7 +42,7 @@
               <span class="input-group-text">
                 <i class="bi bi-envelope-fill"></i>
               </span>
-                <input type="email" class="form-control" id="email" name="email" placeholder="tucorreo@example.com" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="tucorreo@example.com" >
             </div>
         </div>
 
@@ -50,7 +52,7 @@
                 <span class="input-group-text">
                     <i class="bi bi-telephone-fill"></i>
                 </span>
-                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="+52" required>
+                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="+52" >
             </div>
         </div>
 
@@ -60,7 +62,7 @@
           <span class="input-group-text">
             <i class="bi bi-lock-fill"></i>
           </span>
-                <input type="password" class="form-control" id="password" name="password" placeholder="********" required>
+                <input type="password" class="form-control" id="password" name="password" placeholder="********" >
             </div>
         </div>
         <button type="submit" class="btn btn-primary w-100">Registrar Cuenta</button>

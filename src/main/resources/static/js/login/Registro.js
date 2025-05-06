@@ -31,10 +31,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log(data)
+            const {status} = data;
+            if (status === 201){
+                document.querySelector("#exito").classList.remove("d-none");
+                setTimeout(() => {
+                    document.querySelector("#exito").classList.add("d-none");
+                }, 3500)
+            } else{
+                const erroresArray = Object.values(data);
+                mostrarErrores(erroresArray);
+            }
         }).catch((error) => {
             console.log("Error en peticion al backend")
             console.log(error.message);
-        })
+        });
+    }
+
+    function mostrarErrores(errores){
+        const divErrores = document.querySelector("#errores");
+        divErrores.innerHTML = "";
+        errores.forEach((error) => {
+            const pError = document.createElement("p");
+            pError.textContent = error;
+            pError.classList.add("px-3", "py-2", "text-center", "fw-semibold", "mb-3", "text-white", "bg-danger", "rounded");
+            divErrores.appendChild(pError);
+        });
+        setTimeout(() => {
+            divErrores.innerHTML = "";
+        }, 4000)
     }
 })

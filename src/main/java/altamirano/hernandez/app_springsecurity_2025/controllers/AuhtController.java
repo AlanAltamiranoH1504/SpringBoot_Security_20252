@@ -76,7 +76,6 @@ public class AuhtController {
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             iUsuarioService.save(usuario);
             json.put("status", HttpStatus.CREATED.value());
-            json.put("msg", "Usuario creado correctamente");
             return ResponseEntity.status(HttpStatus.CREATED).body(json);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());

@@ -27,7 +27,7 @@ public class Usuario {
     private String telefono;
 
     @NotBlank(message = "El password del usuario no puede estar vacio")
-    @Size(min = 5, max = 100, message = "El password debe ser de entre 5 y 100 caracteres")
+    @Size(min = 5, max = 100, message = "El password entre 5 y 100 caracteres")
     private String password;
     private int estado;
 
