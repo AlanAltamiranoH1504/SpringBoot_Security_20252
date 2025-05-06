@@ -15,4 +15,9 @@ public class LoginController {
         model.addAttribute("_csrf", csrfToken);
         return "login/login";
     }
+
+    @GetMapping("/register")
+    public String registerForm(Model model, CsrfToken csrfToken){
+        return "login/register";
+    }
 }
