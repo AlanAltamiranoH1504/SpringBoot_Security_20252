@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 //Clase de Configuracion de SpringSecurity
 @Configuration
@@ -29,19 +31,29 @@ public class SpringSecurityConfig {
 
     //Metodo BCrypPasswordEncode
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    //Metodo SecurityContextRepository para persistencia de sesion en AJAX
+    @Bean
+    public SecurityContextRepository securityContextRepository() {
+        return new HttpSessionSecurityContextRepository();
     }
 
     //Metodo SecurityFilterChain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth
+        http.securityContext(context -> context
+                        .securityContextRepository(securityContextRepository()))
+                .authorizeHttpRequests(auth -> auth
                         //Rutas que no requieren autenticacion
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/liberado/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/acceso/registro").permitAll()
                         .requestMatchers(HttpMethod.GET, "/acceso/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+
                         //Liberacion de archivos estaticos
                         .requestMatchers("/css/**", "/js/**", "/imgs/**", "/static/**").permitAll()
 
@@ -52,15 +64,14 @@ public class SpringSecurityConfig {
                         .anyRequest().authenticated())
 //                .formLogin(Customizer.withDefaults())
                 .formLogin(form -> form
-                        .loginPage("/acceso/login") //Ruta de formulario de login
-                        .usernameParameter("email") //Input de email
-                        .passwordParameter("password") //Input de password
-                        .defaultSuccessUrl("/") //Ruta de redireccion si el login es exitoso
+                                .loginPage("/acceso/login") //Ruta de formulario de login
+//                                .usernameParameter("email") //Input de email
+//                                .passwordParameter("password") //Input de password
+//                                .defaultSuccessUrl("/") //Ruta de redireccion si el login es exitoso
 //                        .failureUrl("/acceso/login/error") //Ruta de redireccion el el login es erroneo
-                        .permitAll()
+                                .permitAll()
                 )
                 .logout(Customizer.withDefaults());
         return http.build();
     }
-
 }
